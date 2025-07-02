@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Form Interface</title>
+    <style>
+        /* Base styles */
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3a0ca3;
+            --accent-color: #f72585;
+            --light-color: #f8f9fa;
+            --dark-color: #212529;
+            --success-color: #4cc9f0;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            line-height: 1.6;
+            padding: 20px;
+        }
+
+        /* Your provided CSS expanded */
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+        }
+
+        form input,
+        form button {
+            margin: 5px 0;
+            padding: 10px;
+            width: 100%;
+            border: 1px solid #ddd;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        /* Enhanced form styling */
+        form {
+            display: grid;
+            gap: 20px;
+        }
+
+        form input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+
+        form button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        /* Header styles */
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 2.5rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1.1rem;
+        }
+
+        /* Hero section */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border-radius: var(--border-radius);
+            margin-bottom: 2rem;
+        }
+
+        .hero img {
+            max-width: 200px;
+            border-radius: 50%;
+            border: 4px solid white;
+            margin-bottom: 1rem;
+        }
+
+        /* Features grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 3rem 0;
+        }
+
+        .feature-card {
+            padding: 1.5rem;
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            color: var(--dark-color);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 2rem 1rem;
+            }
+        }
+
+        /* Success message */
+        .success {
+            display: none;
+            padding: 1rem;
+            background-color: var(--success-color);
+            color: white;
+            border-radius: var(--border-radius);
+            text-align: center;
+            margin-top: 1rem;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Employee table styles */
+        .employee-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .employee-table th {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 12px;
+            text-align: left;
+        }
+
+        .employee-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .delete-btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 5px 10px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .delete-btn:hover {
+            background-color: #d90429;
+        }
+
+        .employee-table tr:hover {
+            background-color: rgba(67, 97, 238, 0.1);
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submission handler
+            const form = document.querySelector('form');
+            const successMessage = document.querySelector('.success');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Show success message
+                successMessage.style.display = 'block';
+                form.reset();
+                
+                // Hide message after 3 seconds
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 3000);
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="hero">
+            <img src="https://uploads.onecompiler.io/43nawbk3p/43pfhspz2/1.jpg" />
+            <h2>Welcome to Our Platform</h2>
+            <p>Experience seamless interactions with our intuitive interface</p>
+        </div>
+
+        <div class="header">
+            <h1>Get Started Today</h1>
+            <p>Join thousands of satisfied users benefiting from our service</p>
+        </div>
+
+        <form>
+            <input type="text" placeholder="Full Name" required>
+            <input type="email" placeholder="Email Address" required>
+            <input type="password" placeholder="Create Password" required>
+            <button type="submit">Create Account</button>
+        </form>
+
+        <div class="success">
+            <p>Your account has been created successfully!</p>
+        </div>
+        <head>
+          <meta charset="UTF-8">
+          
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Employee Directory</title>
+  <style>
+    :root {
+      --primary-color: #4361ee;
+      --accent-color: #f72585;
+      --light-color: #f8f9fa;
+      --dark-color: #212529;
+      --border-radius: 8px;
+      --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --success-color: #4cc9f0;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: sans-serif; }
+    body { background: var(--light-color); color: var(--dark-color); padding: 20px; }
+    .container { max-width: 900px; margin: auto; background: white; padding: 20px; border-radius: var(--border-radius); box-shadow: var(--box-shadow); }
+    h1, h2 { color: var(--primary-color); margin-bottom: 10px; }
+    form { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 20px; }
+    form input, form button { padding: 10px; border: 1px solid #ddd; border-radius: var(--border-radius); font-size: 1rem; width: 100%; }
+    form input:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2); }
+    form button { background: var(--primary-color); color: white; border: none; cursor: pointer; text-transform: uppercase; }
+    form button:hover { background: var(--accent-color); }
+    .employee-table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+    .employee-table th, .employee-table td { padding: 8px; border: 1px solid #ddd; text-align: left; }
+    .employee-table th { background: var(--primary-color); color: white; }
+    .employee-table img { width: 50px; height: 50px; object-fit: cover; border-radius: 50%; }
+    .delete-btn { background: var(--accent-color); color: white; padding: 5px 10px; border: none; border-radius: 4px; cursor: pointer; }
+    .delete-btn:hover { background: #d90429; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Employee Directory</h1>
+    <form id="employeeForm">
+      <input type="file" id="empImage" accept="image/*" required>
+      <input type="text" id="empID" placeholder="ID" required>
+      <input type="text" id="empName" placeholder="Name" required>
+      <input type="text" id="empPosition" placeholder="Position" required>
+      <input type="text" id="empDept" placeholder="Department" required>
+      <input type="text" id="empPhone" placeholder="Phone" required>
+      <input type="text" id="empSupp" placeholder="Supplements" required>
+      <input type="date" id="empDate" placeholder="Date of issued" required>
+      <input type="number" id="empQty" placeholder="Quantity" required>
+      <input type="number" step="0.01" id="empPrice" placeholder="Price" required>
+      <input type="email" id="empEmail" placeholder="Email id" required>
+      <button type="submit">Add Employee</button>
+    </form>
+
+    <table class="employee-table" id="employeeTable">
+      <thead>
+        <tr>
+          <th>Photo</th><th>ID</th><th>Name</th><th>Position</th><th>Department</th>
+          <th>Phone</th><th>Supplements</th><th>Date Issued</th><th>Quantity</th>
+          <th>Price</th><th>Email</th><th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- rows go here -->
+      </tbody>
+    </table>
+  </div>
+
+  <script>
+    document.getElementById('employeeForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const imgFile = document.getElementById('empImage').files[0];
+      const reader = new FileReader();
+      reader.onload = function(event) {
+        const imgURL = event.target.result;
+        addEmployeeRow(imgURL);
+      };
+      reader.readAsDataURL(imgFile);
+    });
+
+    function addEmployeeRow(imgURL) {
+      const fields = ['empID','empName','empPosition','empDept','empPhone','empSupp','empDate','empQty','empPrice','empEmail'];
+      const values = fields.map(id => document.getElementById(id).value);
+
+      const tbody = document.getElementById('employeeTable').querySelector('tbody');
+      const tr = document.createElement('tr');
+
+      tr.innerHTML = `
+        <td><img src="${imgURL}" alt="Employee"></td>
+        ${values.map(v => `<td>${v}</td>`).join('')}
+        <td><button class="delete-btn">Delete</button></td>
+      `;
+
+      tbody.appendChild(tr);
+      tr.querySelector('.delete-btn').addEventListener('click', () => tr.remove());
+
+      document.getElementById('employeeForm').reset();
+    }
+  </script>
+  <div class="features">
+            <div class="feature-card">
+                <i class="fas fa-rocket"></i>
+                <h3>Fast Performance</h3>
+                <p>Our platform is optimized for speed and efficiency</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-shield-alt"></i>
+                <h3>Security First</h3>
+                <p>Enterprise-grade security to protect your data</p>
+            </div>
+            <div class="feature-card">
+                <i class="fas fa-headset"></i>
+                <h3>24/7 Support</h3>
+                <p>Our team is always ready to assist you</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+
+  
